@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>display image</title>
+
+</head>
+<body>
+	
+	<img src = "" id = "img" alt = "Chart">
+
+	<script>
+
+		var baseUrl = "http://127.0.0.1:8000/";
+		function calls()
+		{
+			var boilerPlateTags = 'data:image/jpg;base64,';
+			var ajaxReq = new XMLHttpRequest(); // class to make HTTP ajax request
+			ajaxReq.open('GET', baseUrl+'getImage'); // declaration request type
+			
+			// steps taken after request
+			ajaxReq.onload = function(){
+				var jsonDict = JSON.parse(ajaxReq.responseText);
+				document.getElementById('img').src = boilerPlateTags+jsonDict.image; // changing the image_tag.src
+			}
+			ajaxReq.send(); // at the end of the function ajax request is sent
+		}
+
+		calls();
+		setInterval(calls, 1000); // `calls` is called after every 1s
+	</script>
+</body>
+</html>
